@@ -1,3 +1,5 @@
+//Luis Camacho
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,6 +33,11 @@ class Inventory {
 		this.serialNum = serialNum;
 		this.val = val;
 	}
+
+	@Override
+	public String toString() {
+		return name + "," + serialNum + "," + val;
+	}
 }
 
 class Main {
@@ -47,8 +54,10 @@ class Main {
 			System.out.println("Press 4 to show all the item.");
 			System.out.println("Press 5 to quit the program.");
 
-			std.nextInt();
+			check = std.nextInt();
+			std.nextLine();
 			switch (check) {
+				// Add Item
 				case 1:
 					System.out.println("Enter the name:");
 					String name = std.nextLine();
@@ -59,26 +68,40 @@ class Main {
 					Inventory item = new Inventory(name, serialNum, val);
 					inv.add(item);
 					break;
+
+				// Delete Item
 				case 2:
 					System.out.println("Enter the serial number of the item to delete:");
 					String temp = std.nextLine();
 					inv.remove(inv.indexOf(temp));
 					break;
+
+				// Update Item
 				case 3:
+					int index = -1;
+
 					System.out.println("Enter the serial number of the item to change:");
 					String serialNum2 = std.nextLine();
-					int index = inv.indexOf(serialNum2);
+					for (int i = 0; i < inv.size(); i++)
+						if (serialNum2.equals(inv.get(i).getSerialNum()))
+							index = i;
+
 					System.out.println("Enter the new name:");
 					String name2 = std.nextLine();
 					System.out.println("Enter the new value in dollars (whole number):");
 					int val2 = std.nextInt();
+					std.nextLine();
+
 					inv.get(index).setName(name2);
 					inv.get(index).setVal(val2);
 					break;
-				case 4: 
-					for(int i = 0; i < inv.size(); i++);
-						inv.get(i);
-					
+
+				// Show Items
+				case 4:
+					for (Inventory i : inv)
+						System.out.println(i);
+					break;
+				// While loop take care of case 5 (exit)
 			}
 
 		}
